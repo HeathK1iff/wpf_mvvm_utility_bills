@@ -1,0 +1,85 @@
+﻿<Window x:Class="wpf_mvvm_utility_bills.Views.Windows.PaidLogEditorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mv="clr-namespace:wpf_mvvm_utility_bills.ViewModels.PaidLog"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
+        Style="{StaticResource WindowStyle}"
+        Title="Add/Edit" Width="350">
+    <Window.DataContext>
+        <mv:PaidLogEditor/>
+    </Window.DataContext>
+    <Grid Grid.Row="1" Margin="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" 
+               Grid.Column="0" 
+               Content="Date Paid" 
+               VerticalAlignment="Center"/>
+        <Label Grid.Row="1" 
+               Grid.Column="0" 
+               Content="Amount" 
+               VerticalAlignment="Center"/>
+        <Label Grid.Row="2" 
+               Grid.Column="0" 
+               Content="Device" 
+               VerticalAlignment="Center"/>
+        <Label Grid.Row="3"
+               Grid.Column="0"
+               Content="Current Value"
+               VerticalAlignment="Center"/>
+
+        <DatePicker Grid.Row="0" 
+                    Grid.Column="1"
+                    SelectedDate="{Binding PaidDate}"
+                    Height="24"
+                    Margin="2"/>
+        <TextBox Grid.Row="1" 
+                 Grid.Column="1" 
+                 Text="{Binding Amount}"
+                 Height="24"
+                 Margin="2"/>
+        <ComboBox Grid.Row="2" 
+                  Grid.Column="1" 
+                  ItemsSource="{Binding Devices}"
+                  SelectedItem="{Binding SelectedDeviceItem}"
+                  DisplayMemberPath="Name"
+                  SelectedValuePath="Id"
+                  Height="24"
+                  Margin="2"/>
+        <ComboBox Grid.Row="3" 
+                  Grid.Column="1" 
+                  ItemsSource="{Binding LogTransactions}"
+                  SelectedItem="{Binding SelectedLogTransaction}"
+                  DisplayMemberPath="CurrentValue"
+                  SelectedValuePath="Id"
+                  Height="24"
+                  Margin="2"/>
+        <StackPanel HorizontalAlignment="Right"
+                    Grid.Row="4"
+                    Grid.ColumnSpan="2"
+                    Orientation="Horizontal">
+            <Button Style="{StaticResource ButtonStyle}"
+                    Command="{Binding Save}"
+                    Content="Save"/>
+            <Button Style="{StaticResource ButtonStyle}"
+                    Command="{Binding Cancel}"
+                    Content="Cancel"/>
+        </StackPanel>
+    </Grid>
+</Window>

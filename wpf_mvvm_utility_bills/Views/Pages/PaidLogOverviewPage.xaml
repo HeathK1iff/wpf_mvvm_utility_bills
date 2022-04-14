@@ -1,0 +1,55 @@
+﻿<Page x:Class="wpf_mvvm_utility_bills.Views.Pages.PaidLogOverviewPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:vm="clr-namespace:wpf_mvvm_utility_bills.ViewModels.PaidLog"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800">
+    <Page.DataContext>
+        <vm:PaidLogOverview/>
+    </Page.DataContext>
+    <Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <ListView
+                SelectedItem="{Binding PaidLogSelectedItem}"
+                ItemsSource="{Binding PaidLogTransactions}"
+                Name="TransactionLog">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Paid Date"
+                                        DisplayMemberBinding="{Binding PaidDate}"
+                                        Width="140"/>
+                        <GridViewColumn Header="Value"
+                                        DisplayMemberBinding="{Binding PaidValue.CurrentValue}"
+                                        Width="140"/>
+                        <GridViewColumn Header="Amount"
+                                        DisplayMemberBinding="{Binding Amount}"
+                                        Width="200"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <StackPanel Grid.Row="1" Grid.ColumnSpan="2"
+                        Orientation="Horizontal">
+                <Button Style="{StaticResource ButtonStyle}" 
+                        Command="{Binding Append}"
+                        Content="Append"/>
+                <Button Style="{StaticResource ButtonStyle}" 
+                        Command="{Binding Edit}"
+                        CommandParameter="{Binding ElementName=TransactionLog, Path=SelectedItem}"
+                        Content="Edit"/>
+                <Button Style="{StaticResource ButtonStyle}"
+                        Command="{Binding Remove}"
+                        CommandParameter="{Binding ElementName=TransactionLog, Path=SelectedItem}"
+                        Content="Remove"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>
